@@ -49,16 +49,22 @@ if __name__ == "__main__":
 
     print(kh.shape)
 
-#Visualize the grid of heatmaps and save the plot
-fig, axs = plt.subplots(4, 4, figsize=(16, 16))
-for i in range(16):
-    row = i // 4
-    col = i % 4
-    axs[row, col].imshow(kh[0, i], cmap='hot', interpolation='nearest')
-    axs[row, col].set_title(f'Joint {i+1}')
-    axs[row, col].axis('off')
-plt.savefig(os.path.join("outputs/", 'heatmap_grid.png'), bbox_inches='tight')
-plt.close()
+    #Visualize the grid of heatmaps and save the plot
+    fig, axs = plt.subplots(4, 4, figsize=(16, 16))
+    for i in range(16):
+        row = i // 4
+        col = i % 4
+        axs[row, col].imshow(kh[0, i], cmap='hot', interpolation='nearest')
+        axs[row, col].set_title(f'Joint {i+1}')
+        axs[row, col].axis('off')
+    plt.savefig(os.path.join("outputs/", 'heatmap_grid.png'), bbox_inches='tight')
+    plt.close()
+
+    print("Training Phase")
+
+    # model = PoseEstimationModel(image_size=image_size, num_keypoints=num_keypoints)
+    model = StackedHourGlass(nChannels=256, nStack=2, nModules=2, numReductions=4, nJoints=num_keypoints)
+    train_model(model, dataset, batch_size=64, num_epochs=10, learning_rate=1e-3, device='cuda')
 
 '''
 # Create a new figure and axis
@@ -82,9 +88,5 @@ plt.close()
 
 
     
-    # print("Training Phase")
-
-    # # model = PoseEstimationModel(image_size=image_size, num_keypoints=num_keypoints)
-    # model = StackedHourGlass(nChannels=256, nStack=2, nModules=2, numReductions=4, nJoints=num_keypoints)
-    # train_model(model, dataset, batch_size=64, num_epochs=10, learning_rate=1e-3, device='cuda')
+    
 
