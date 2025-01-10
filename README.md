@@ -12,6 +12,9 @@
 
 The **MPII Human Pose Dataset** is used to train and evaluate the model. This dataset contains around 25,000 images and over 40,000 annotated human poses, covering a wide range of activities.
 
+## Model Architecture
+![Model Architecture](arch/model-arch.png)
+
 ## Installation
 
 1. Clone the repository:
